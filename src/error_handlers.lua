@@ -6,10 +6,10 @@ local TYPE_JSON = "application/json"
 local TYPE_XML = "application/xml"
 local TYPE_HTML = "text/html"
 
-local text_template = "%s"
-local json_template = '{"message":"%s"}'
-local xml_template = '<?xml version="1.0" encoding="UTF-8"?>\n<error><message>%s</message></error>'
-local html_template = '<html><head><title>Error</title></head><body><h1>Error</h1><p>%s.</p></body></html>'
+local text_template = "%s\n"
+local json_template = '{"message":"%s"}\n'
+local xml_template = '<?xml version="1.0" encoding="UTF-8"?>\n<error><message>%s</message></error>\n'
+local html_template = '<html><head><title>Error</title></head><body><h1>Error</h1><p>%s.</p></body></html>\n'
 
 local BODIES = {
   s300 = "Multiple Choices",
@@ -94,14 +94,14 @@ local function transform_custom_status_codes(status_code)
   if status_code > 451 and status_code < 500 then
     status_code = 400
   end
-  
+
   return status_code
 end
 
 function _M.headers(ngx)
   local _, content_type = parse_accept_header(ngx)
   ngx.status = transform_custom_status_codes(ngx.status)
-  
+
   ngx.header["Content-Type"] = content_type
   ngx.header["Server"] = nil
 end
@@ -110,9 +110,9 @@ function _M.body(ngx)
   local message
   local template, _ = parse_accept_header(ngx)
   local status = transform_custom_status_codes(ngx.status)
-  
+
   message = BODIES["s"..status] and BODIES["s"..status] or format(BODIES.default, status)
   ngx.say(format(template, message))
-end  
+end
 
 return _M
