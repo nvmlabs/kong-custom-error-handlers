@@ -63,9 +63,11 @@ local BODIES = {
   default = "%d"
 }
 
-return function(ngx)
+local _M = {}
+
+local function parse_accept_header(ngx)
   local accept_header = ngx.req.get_headers()["accept"]
-  local template, message, content_type
+  local template, content_type
 
   if accept_header == nil then
     template = text_template
@@ -84,15 +86,33 @@ return function(ngx)
     content_type = TYPE_PLAIN
   end
 
-  local status = ngx.status
-  -- Non-standard 4XX HTTP codes will be returned as 400 Bad Request
-  if status > 451 and status < 500 then
-    status = 400
-    ngx.status = 400
-  end
-
-  message = BODIES["s"..status] and BODIES["s"..status] or format(BODIES.default, status)
-
-  ngx.header["Content-Type"] = content_type
-  ngx.say(format(template, message))
+  return template, content_type
 end
+
+local function transform_custom_status_codes(status_code)
+  -- Non-standard 4XX HTTP codes will be returned as 400 Bad Request
+  if status_code > 451 and status_code < 500 then
+    status_code = 400
+  end
+  
+  return status_code
+end
+
+function _M.headers(ngx)
+  local _, content_type = parse_accept_header(ngx)
+  ngx.status = transform_custom_status_codes(ngx.status)
+  
+  ngx.header["Content-Type"] = content_type
+  ngx.header["Server"] = nil
+end
+
+function _M.body(ngx)
+  local message
+  local template, _ = parse_accept_header(ngx)
+  local status = transform_custom_status_codes(ngx.status)
+  
+  message = BODIES["s"..status] and BODIES["s"..status] or format(BODIES.default, status)
+  ngx.say(format(template, message))
+end  
+
+return _M

@@ -32,8 +32,11 @@ location / {
   error_page 305 418 421 494 500 502 504 /custom-error-handlers;
   location = /custom-error-handlers {
     internal;
+    header_filter_by_lua_block {
+      require("kong.custom.error_handlers").headers(ngx)
+    }
     content_by_lua_block {
-      require("kong.custom.error_handlers")(ngx)
+      require("kong.custom.error_handlers").body(ngx)
     }
   }
 }

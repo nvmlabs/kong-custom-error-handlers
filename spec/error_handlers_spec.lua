@@ -83,7 +83,8 @@ describe("error handlers", function()
       it("should return "..k, function()
         _G.ngx.status = k
 
-        error_handlers(_G.ngx)
+        error_handlers.headers(_G.ngx)
+        error_handlers.body(_G.ngx)
         assert.equal(v[1], _G.ngx.status)
         assert.equal(format(messageFormat, v[2]), whatWasSaid)
       end)
@@ -105,7 +106,8 @@ describe("error handlers", function()
       it("should return "..k, function()
         _G.ngx.status = k
 
-        error_handlers(_G.ngx)
+        error_handlers.headers(_G.ngx)
+        error_handlers.body(_G.ngx)
         assert.equal(v[1], _G.ngx.status)
         assert.equal(format(messageFormat, v[2]), whatWasSaid)
       end)
@@ -127,7 +129,8 @@ describe("error handlers", function()
       it("should return "..k, function()
         _G.ngx.status = k
 
-        error_handlers(_G.ngx)
+        error_handlers.headers(_G.ngx)
+        error_handlers.body(_G.ngx)
         assert.equal(v[1], _G.ngx.status)
         assert.equal(format(messageFormat, v[2]), whatWasSaid)
       end)
@@ -149,7 +152,8 @@ describe("error handlers", function()
       it("should return "..k, function()
         _G.ngx.status = k
 
-        error_handlers(_G.ngx)
+        error_handlers.headers(_G.ngx)
+        error_handlers.body(_G.ngx)
         assert.equal(v[1], _G.ngx.status)
         assert.equal(format(messageFormat, v[2]), whatWasSaid)
       end)
