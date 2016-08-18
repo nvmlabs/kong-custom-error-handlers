@@ -76,7 +76,7 @@ describe("error handlers", function()
         }
       end
 
-      messageFormat = "%s\n"
+      messageFormat = "%s"
     end)
 
     for k, v in pairs( statusCodeTests ) do
@@ -99,7 +99,7 @@ describe("error handlers", function()
         }
       end
 
-      messageFormat = '{"message":"%s"}\n'
+      messageFormat = '{"message":"%s"}'
     end)
 
     for k, v in pairs( statusCodeTests ) do
@@ -122,7 +122,7 @@ describe("error handlers", function()
         }
       end
 
-      messageFormat = '<?xml version="1.0" encoding="UTF-8"?>\n<error><message>%s</message></error>\n'
+      messageFormat = '<?xml version="1.0" encoding="UTF-8"?>\n<error><message>%s</message></error>'
     end)
 
     for k, v in pairs( statusCodeTests ) do
@@ -145,7 +145,7 @@ describe("error handlers", function()
         }
       end
 
-      messageFormat = '<html><head><title>Error</title></head><body><h1>Error</h1><p>%s.</p></body></html>\n'
+      messageFormat = '<html><head><title>Error</title></head><body><h1>Error</h1><p>%s.</p></body></html>'
     end)
 
     for k, v in pairs( statusCodeTests ) do

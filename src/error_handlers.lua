@@ -6,10 +6,10 @@ local TYPE_JSON = "application/json"
 local TYPE_XML = "application/xml"
 local TYPE_HTML = "text/html"
 
-local text_template = "%s\n"
-local json_template = '{"message":"%s"}\n'
-local xml_template = '<?xml version="1.0" encoding="UTF-8"?>\n<error><message>%s</message></error>\n'
-local html_template = '<html><head><title>Error</title></head><body><h1>Error</h1><p>%s.</p></body></html>\n'
+local text_template = "%s"
+local json_template = '{"message":"%s"}'
+local xml_template = '<?xml version="1.0" encoding="UTF-8"?>\n<error><message>%s</message></error>'
+local html_template = '<html><head><title>Error</title></head><body><h1>Error</h1><p>%s.</p></body></html>'
 
 local BODIES = {
   s300 = "Multiple Choices",
