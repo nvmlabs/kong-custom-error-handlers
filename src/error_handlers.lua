@@ -70,20 +70,20 @@ local function parse_accept_header(ngx)
   local template, content_type
 
   if accept_header == nil then
-    template = text_template
-    content_type = TYPE_PLAIN
+    template = json_template
+    content_type = TYPE_JSON
   elseif find(accept_header, TYPE_HTML, nil, true) then
     template = html_template
     content_type = TYPE_HTML
-  elseif find(accept_header, TYPE_JSON, nil, true) then
-    template = json_template
-    content_type = TYPE_JSON
+  elseif find(accept_header, TYPE_PLAIN, nil, true) then
+    template = text_template
+    content_type = TYPE_PLAIN
   elseif find(accept_header, TYPE_XML, nil, true) then
     template = xml_template
     content_type = TYPE_XML
   else
-    template = text_template
-    content_type = TYPE_PLAIN
+    template = json_template
+    content_type = TYPE_JSON
   end
 
   return template, content_type

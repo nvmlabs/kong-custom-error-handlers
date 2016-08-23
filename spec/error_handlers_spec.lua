@@ -68,6 +68,50 @@ describe("error handlers", function()
     end
   end)
 
+  describe("empty Accept header", function()
+    setup(function()
+      _G.ngx.req.get_headers = function()
+        return {}
+      end
+
+      messageFormat = '{"message":"%s"}'
+    end)
+
+    for k, v in pairs( statusCodeTests ) do
+      it("should return "..k, function()
+        _G.ngx.status = k
+
+        error_handlers.headers(_G.ngx)
+        error_handlers.body(_G.ngx)
+        assert.equal(v[1], _G.ngx.status)
+        assert.equal(format(messageFormat, v[2]), whatWasSaid)
+      end)
+    end
+  end)
+
+  describe("custom Accept header", function()
+    setup(function()
+      _G.ngx.req.get_headers = function()
+        return {
+          accept = "custom"
+        }
+      end
+
+      messageFormat = '{"message":"%s"}'
+    end)
+
+    for k, v in pairs( statusCodeTests ) do
+      it("should return "..k, function()
+        _G.ngx.status = k
+
+        error_handlers.headers(_G.ngx)
+        error_handlers.body(_G.ngx)
+        assert.equal(v[1], _G.ngx.status)
+        assert.equal(format(messageFormat, v[2]), whatWasSaid)
+      end)
+    end
+  end)
+
   describe("text/plain", function()
     setup(function()
       _G.ngx.req.get_headers = function()
