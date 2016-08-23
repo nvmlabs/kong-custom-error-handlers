@@ -6,7 +6,7 @@ A module that provides more extensive error handling.
 This luarock module is similar in function to the core error handlers in Kong but does not leak any information about the technology stack. It aims to provide a consistent message format for all errors, including custom NGINX errors.
 
 The error handlers support four content types:
-- 'application/json'
+- 'application/json' (default)
 - 'application/xml'
 - 'text/html'
 - 'text/plain'
